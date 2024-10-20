@@ -40,9 +40,9 @@
    npm run start:dev
    ```
 
-   A aplicação estará disponível em [http://localhost:3000](http://localhost:3000).
+   A aplicação estará disponível em [http://localhost:8000](http://localhost:8000).
 
-4. **Teste os Endpoints**: Acesse o endpoint para conseguir utilizar o swagger [http://localhost:3000/api](http://localhost:3000/api).
+4. **Teste os Endpoints**: Acesse o endpoint para conseguir utilizar o swagger [http://localhost:8000/api](http://localhost:8000/api).
 
 ## Como Executar os Testes de Integração
 
