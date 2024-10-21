@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsBoolean, IsOptional } from 'class-validator';
+import { IsArray, IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateMovieDto {
   @IsInt()
@@ -8,12 +8,12 @@ export class CreateMovieDto {
   title: string;
 
   @IsOptional()
-  @IsString()
-  studios?: string;
+  @IsArray()
+  studios?: string[];
 
   @IsOptional()
-  @IsString()
-  producers?: string;
+  @IsArray()
+  producers?: string[];
 
   @IsBoolean()
   winner: boolean;

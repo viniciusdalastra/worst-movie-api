@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Movie } from '../entities/movie.entity';
 import { MovieService } from 'src/application/services/movie.service';
 import { AwardIntervalsResponseDTO } from '../dtos/awardIntervalResponse.dto';
+import { Movie } from '../entities/movie.entity';
 
 @Injectable()
 export class GetMovieAwardIntervalUseCase {
-  constructor(private readonly movieService: MovieService) {}
+  constructor(private readonly movieService: MovieService) { }
 
   async execute(): Promise<AwardIntervalsResponseDTO> {
-    const movies = await this.movieService.findAll();
+    const movies = (await this.movieService.findAll()).filter((movie) => movie.winner);
     const intervals = this.calculateIntervals(movies);
     const min = this.getMinInterval(intervals);
     const max = this.getMaxInterval(intervals);
@@ -23,22 +23,18 @@ export class GetMovieAwardIntervalUseCase {
       followingWin: number;
     }[] = [];
 
-    const groupedProducers = movies.reduce(
-      (acc, movie) => {
-        const producerName = movie.producers;
+    const groupedProducers = movies.reduce((acc, movie) => {
+      movie.producers.forEach(producerName => {
         if (!acc[producerName]) {
           acc[producerName] = [];
         }
         acc[producerName].push(movie);
-        return acc;
-      },
-      {} as Record<string, Movie[]>,
-    );
+      });
+      return acc;
+    }, {} as Record<string, Movie[]>);
 
     for (const producerName in groupedProducers) {
-      const movieWins = groupedProducers[producerName].sort(
-        (a, b) => a.year - b.year,
-      );
+      const movieWins = groupedProducers[producerName].sort((a, b) => a.year - b.year);
 
       for (let i = 1; i < movieWins.length; i++) {
         const previousWin = movieWins[i - 1].year;

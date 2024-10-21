@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Movie {
@@ -11,11 +11,21 @@ export class Movie {
   @Column()
   title: string;
 
-  @Column()
-  studios: string;
+  @Column({
+    type: 'text', transformer: {
+      to: (value: string[]) => JSON.stringify(value),
+      from: (value: string) => JSON.parse(value)
+    }
+  })
+  studios: string[];
 
-  @Column()
-  producers: string;
+  @Column({
+    type: 'text', transformer: {
+      to: (value: string[]) => JSON.stringify(value),
+      from: (value: string) => JSON.parse(value)
+    }
+  })
+  producers: string[];
 
   @Column({ default: false })
   winner: boolean;

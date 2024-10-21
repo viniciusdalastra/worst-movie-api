@@ -8,7 +8,7 @@ export class MovieService {
   constructor(
     @InjectRepository(Movie)
     private repository: Repository<Movie>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Movie[]> {
     return await this.repository.find();

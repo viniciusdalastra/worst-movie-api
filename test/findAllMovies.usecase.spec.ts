@@ -32,15 +32,15 @@ describe('FindAllMoviesUseCase', () => {
     await createMovieUseCase.execute({
       year: 2022,
       title: 'Test Movie 1',
-      studios: 'Test Studios 1',
-      producers: 'Test Producers 1',
+      studios: ['Test Studios 1'],
+      producers: ['Test Producers 1'],
       winner: false,
     });
     await createMovieUseCase.execute({
       year: 2023,
       title: 'Test Movie 2',
-      studios: 'Test Studios 2',
-      producers: 'Test Producers 2',
+      studios: ['Test Studios 2'],
+      producers: ['Test Producers 2'],
       winner: true,
     });
 

@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { TestingModule, Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MovieService } from 'src/application/services/movie.service';
 import { Movie } from 'src/domain/entities/movie.entity';
@@ -32,8 +32,8 @@ describe('UpdateMovieUseCase', () => {
     const movie = await createMovieUseCase.execute({
       year: 2022,
       title: 'Old Title',
-      studios: 'Test Studios',
-      producers: 'Test Producers',
+      studios: ['Test Studios'],
+      producers: ['Test Producers'],
       winner: false,
     });
 

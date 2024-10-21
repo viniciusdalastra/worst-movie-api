@@ -1,8 +1,8 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { MovieService } from '../src/application/services/movie.service';
-import { CreateMovieUseCase } from '../src/domain/usecases/createMovie.usecase';
-import { BadRequestException } from '@nestjs/common';
 import { CreateMovieDto } from '../src/domain/dtos/createMovie.dto';
+import { CreateMovieUseCase } from '../src/domain/usecases/createMovie.usecase';
 
 describe('CreateMovieUseCase', () => {
   let createMovieUseCase: CreateMovieUseCase;
@@ -31,8 +31,8 @@ describe('CreateMovieUseCase', () => {
     const movieData = {
       year: 2022,
       title: 'Test Movie',
-      studios: 'Test Studios',
-      producers: 'Test Producers',
+      studios: ['Test Studios'],
+      producers: ['Test Producers'],
       winner: false,
     } as CreateMovieDto;
 
@@ -40,13 +40,15 @@ describe('CreateMovieUseCase', () => {
 
     expect(movie).toHaveProperty('id');
     expect(movie.title).toEqual('Test Movie');
+    expect(movie.studios).toEqual(['Test Studios']);
+    expect(movie.producers).toEqual(['Test Producers']);
   });
 
   it('should throw an error if producer is not defined', async () => {
     const movieData = {
       year: 2022,
       title: 'Test Movie',
-      studios: 'Test Studios',
+      studios: ['Test Studios'],
       winner: false,
     } as CreateMovieDto;
 
@@ -61,8 +63,8 @@ describe('CreateMovieUseCase', () => {
   it('should throw an error if year is not defined', async () => {
     const movieData = {
       title: 'Test Movie',
-      studios: 'Test Studios',
-      producers: 'Test Producers',
+      studios: ['Test Studios'],
+      producers: ['Test Producers'],
       winner: false,
     } as CreateMovieDto;
 
@@ -78,9 +80,9 @@ describe('CreateMovieUseCase', () => {
     const movieData = {
       year: 2022,
       title: 'Test Movie',
-      producers: 'Test Producers',
+      producers: ['Test Producers'],
       winner: false,
-    };
+    } as CreateMovieDto;
 
     await expect(createMovieUseCase.execute(movieData)).rejects.toThrow(
       BadRequestException,
